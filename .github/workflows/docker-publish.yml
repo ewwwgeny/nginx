@@ -48,7 +48,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: 'ghh5739/test-ngnix/test-ngnix'
+          tags: 'ghh5739/test-ngnix'
           # labels: ${{ steps.meta.outputs.labels }}
     
       

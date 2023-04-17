@@ -49,7 +49,13 @@ jobs:
           context: .
           push: true
           tags: 'ghh5739/test-ngnix'
-          # labels: ${{ steps.meta.outputs.labels }}
-    
+                    
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_HOST }}
+          
+     
       
     

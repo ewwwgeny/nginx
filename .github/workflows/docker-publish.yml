@@ -52,8 +52,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-host: ${{ secrets.SSH_HOST }}
           
-      - name: test docker
-        run: docker ps
+
         
           
      

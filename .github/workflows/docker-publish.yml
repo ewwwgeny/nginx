@@ -33,18 +33,18 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       
-      - name: Log in to Docker Hub
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+     # - name: Log in to Docker Hub
+     #   uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+     #   with:
+     #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+     #     password: ${{ secrets.DOCKERHUB_TOKEN }}
        
-      - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          push: true
-          tags: 'ghh5739/test-ngnix'
+     # - name: Build and push Docker image
+     #   uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+     #   with:
+     #     context: .
+     #     push: true
+     #     tags: 'ghh5739/test-ngnix'
                     
       - name: Install SSH Key
         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
@@ -52,8 +52,10 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-host: ${{ secrets.SSH_HOST }}
           
-      - name: Creat remote Docker context
+      - name: Create remote Docker context
         run: docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}"
+             docker context use remote
+             docker ps
           
 
         

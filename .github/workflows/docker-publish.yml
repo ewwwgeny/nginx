@@ -59,7 +59,7 @@ jobs:
         run: docker context use remote
         
       - name: Stop old container
-        if: contains(docker ps, ${{ secrets.DOCKER_REPOSITORY_NAME }})
+        if: contains(docker ps, 'ghh5739')
         run: docker stop ${{ secrets.DOCKER_REPOSITORY_NAME }}
         
       - name: Remove old image

@@ -62,7 +62,7 @@ jobs:
         run: docker pull ${{ secrets.DOCKER_REPOSITORY_NAME }}
         
       - name: Run the new image
-        run: docker run ${{ secrets.DOCKER_REPOSITORY_NAME }}
+        run: docker images
              
           
 

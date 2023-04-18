@@ -54,8 +54,13 @@ jobs:
           
       - name: Create remote Docker context
         run: docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}"
-             docker context use remote
-             docker ps
+        
+      - name: Select remote context
+        run: docker context use remote
+        
+      - name: Select remote context
+        run: docker ps
+             
           
 
         

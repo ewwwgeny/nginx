@@ -59,7 +59,7 @@ jobs:
         run: docker context use remote
         
       - name: Get and run new image
-        run: docker run ${{ secrets.DOCKER_REPOSITORY_NAME }}
+        run: docker pull ${{ secrets.DOCKER_REPOSITORY_NAME }}
              
           
 

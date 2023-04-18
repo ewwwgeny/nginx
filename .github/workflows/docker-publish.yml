@@ -58,8 +58,14 @@ jobs:
       - name: Select remote context
         run: docker context use remote
         
-      - name: Select remote context
-        run: docker ps
+      - name: Stop old container
+        run: docker stop ghh5739/test-ngnix
+        
+      - name: Remove old image
+        run: docker system prune -f
+        
+      - name: Get new container
+        run: docker run ghh5739/test-ngnix
              
           
 

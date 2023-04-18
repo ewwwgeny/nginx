@@ -58,13 +58,6 @@ jobs:
       - name: Select remote context
         run: docker context use remote
         
-      - name: Stop old container
-        if: contains(docker ps, 'ghh5739')
-        run: docker stop ${{ secrets.DOCKER_REPOSITORY_NAME }}
-        
-      - name: Remove old image
-        run: docker images
-        
       - name: Get and run new image
         run: docker run ${{ secrets.DOCKER_REPOSITORY_NAME }}
              

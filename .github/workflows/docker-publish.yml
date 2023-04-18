@@ -26,8 +26,8 @@ on:
     branches: [ "master" ]  
 
 jobs:
-  deploy:
-    name: Deploy Docker container
+  publish:
+    name: Publish Docker container
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -44,7 +44,7 @@ jobs:
      #   with:
      #     context: .
      #     push: true
-     #     tags: 'ghh5739/test-ngnix'
+     #     tags: ${{ DOCKER_REPOSITORY_NAME }}
                     
       - name: Install SSH Key
         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
@@ -59,13 +59,14 @@ jobs:
         run: docker context use remote
         
       - name: Stop old container
-        run: docker stop ghh5739/test-ngnix
+        if: contains(docker ps, ${{ DOCKER_REPOSITORY_NAME }})
+        run: docker stop ${{ DOCKER_REPOSITORY_NAME }}
         
       - name: Remove old image
-        run: docker system prune -f
+        run: docker images
         
-      - name: Get new container
-        run: docker run ghh5739/test-ngnix
+      - name: Get and run new image
+        run: docker run ${{ DOCKER_REPOSITORY_NAME }}
              
           
 

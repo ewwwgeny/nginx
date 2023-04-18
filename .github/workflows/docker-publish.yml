@@ -44,7 +44,7 @@ jobs:
      #   with:
      #     context: .
      #     push: true
-     #     tags: ${{ DOCKER_REPOSITORY_NAME }}
+     #     tags: ${{ secrets.DOCKER_REPOSITORY_NAME }}
                     
       - name: Install SSH Key
         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
@@ -59,14 +59,14 @@ jobs:
         run: docker context use remote
         
       - name: Stop old container
-        if: contains(docker ps, ${{ DOCKER_REPOSITORY_NAME }})
-        run: docker stop ${{ DOCKER_REPOSITORY_NAME }}
+        if: contains(docker ps, ${{ secrets.DOCKER_REPOSITORY_NAME }})
+        run: docker stop ${{ secrets.DOCKER_REPOSITORY_NAME }}
         
       - name: Remove old image
         run: docker images
         
       - name: Get and run new image
-        run: docker run ${{ DOCKER_REPOSITORY_NAME }}
+        run: docker run ${{ secrets.DOCKER_REPOSITORY_NAME }}
              
           
 

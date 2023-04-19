@@ -53,10 +53,9 @@ jobs:
           ssh-host: ${{ secrets.SSH_HOST }}
           
       - name: Stop old container
-        if: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ secrets.DOCKER_REPOSITORY_NAME }}
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ secrets.DOCKER_REPOSITORY_NAME }} | xargs docker stop
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ secrets.DOCKER_REPOSITORY_NAME }} | xargs docker stop 2> /dev/null
       
-      - name: Run container
+      - name: Run new container
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker run --rm -d -p 80:80 ${{ secrets.DOCKER_REPOSITORY_NAME }}
           
      # - name: Create remote Docker context

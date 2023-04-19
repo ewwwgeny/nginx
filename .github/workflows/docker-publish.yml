@@ -53,7 +53,7 @@ jobs:
         with:
            to: ${{ secrets.TELEGRAM_TO }}
            token: ${{ secrets.TELEGRAM_TOKEN }}
-           message: The project ${{ env.projectName }} was successfully published to Dockerhub
+           message: The project ${{ env.projectName }} was published to Dockerhub
                     
       - name: Install SSH Key
         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
@@ -75,7 +75,7 @@ jobs:
         with:
            to: ${{ secrets.TELEGRAM_TO }}
            token: ${{ secrets.TELEGRAM_TOKEN }}
-           message: The project ${{ env.projectName }} was successfully deployed to host
+           message: The project ${{ env.projectName }} was deployed to host
           
    
           

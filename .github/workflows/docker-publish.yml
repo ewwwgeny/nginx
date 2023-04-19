@@ -26,12 +26,14 @@ on:
     branches: [ "master" ]  
 
 jobs:
-  publish:
-    name: Publish Docker container
+  deploy:
+    name: Deploy Docker container
     runs-on: ubuntu-latest
+    env:
+      projectName: ghh5739/test-ngnix
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
      # - name: Log in to Docker Hub
      #   uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -44,7 +46,14 @@ jobs:
      #   with:
      #     context: .
      #     push: true
-     #     tags: ${{ secrets.DOCKER_REPOSITORY_NAME }}
+     #     tags: ${{ env.projectName }}
+     
+      - name: Send publish message
+        uses: appleboy/telegram-action@master
+        with:
+           to: ${{ secrets.TELEGRAM_TO }}
+           token: ${{ secrets.TELEGRAM_TOKEN }}
+           message: The project ${{ env.projectName }} was successfully published to Dockerhub
                     
       - name: Install SSH Key
         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
@@ -53,13 +62,20 @@ jobs:
           ssh-host: ${{ secrets.SSH_HOST }}
           
      # - name: Stop old container
-     #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ secrets.DOCKER_REPOSITORY_NAME }} | xargs docker stop
+     #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ env.projectName }} | xargs docker stop
         
       - name: Pull new image
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker pull ${{ secrets.DOCKER_REPOSITORY_NAME }}
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker pull ${{ env.projectName }}
       
       - name: Run new container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker run --rm -d -p 80:80 ${{ secrets.DOCKER_REPOSITORY_NAME }}
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker run --rm -d -p 80:80 ${{ env.projectName }}
+        
+      - name: Send deploy message
+        uses: appleboy/telegram-action@master
+        with:
+           to: ${{ secrets.TELEGRAM_TO }}
+           token: ${{ secrets.TELEGRAM_TOKEN }}
+           message: The project ${{ env.projectName }} was successfully deployed to host
           
    
           

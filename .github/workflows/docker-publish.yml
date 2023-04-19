@@ -52,8 +52,8 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-host: ${{ secrets.SSH_HOST }}
           
-      - name: Stop old container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ secrets.DOCKER_REPOSITORY_NAME }} | xargs docker stop
+     # - name: Stop old container
+     #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ secrets.DOCKER_REPOSITORY_NAME }} | xargs docker stop
         
       - name: Pull new image
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker pull ${{ secrets.DOCKER_REPOSITORY_NAME }}

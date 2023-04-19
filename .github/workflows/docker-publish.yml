@@ -53,7 +53,7 @@ jobs:
           ssh-host: ${{ secrets.SSH_HOST }}
           
       - name: Run container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker run ${{ secrets.DOCKER_REPOSITORY_NAME }}
           
      # - name: Create remote Docker context
      #   run: docker context create remote --docker "host=ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}"

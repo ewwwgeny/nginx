@@ -53,7 +53,7 @@ jobs:
           ssh-host: ${{ secrets.SSH_HOST }}
           
       - name: Stop old container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker stop ${{ secrets.DOCKER_REPOSITORY_NAME }}
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker stop $(docker ps | grep nginx)
       
       - name: Run container
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker run --rm -d -p 80:80 ${{ secrets.DOCKER_REPOSITORY_NAME }}

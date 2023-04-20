@@ -62,7 +62,7 @@ jobs:
           ssh-host: ${{ secrets.SSH_HOST }}
           
       - name: Remove old container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ env.projectName }} | docker rm -f
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker stop $(docker ps -q --filter ancestor=ghh5739/test-ngnix)
      
       - name: Pull new image
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker pull ${{ env.projectName }}

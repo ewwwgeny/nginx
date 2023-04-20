@@ -61,8 +61,8 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-host: ${{ secrets.SSH_HOST }}
           
-      - name: Stop old container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker rm -f $(docker ps -q --filter ancestor=${{ env.projectName }})
+      - name: Remove old container
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ env.projectName }} | docker rm -f
      
       - name: Pull new image
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker pull ${{ env.projectName }}

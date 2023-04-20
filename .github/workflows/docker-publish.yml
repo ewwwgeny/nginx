@@ -62,7 +62,7 @@ jobs:
           ssh-host: ${{ secrets.SSH_HOST }}
           
       - name: Remove old container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker rm f test-nginx
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker rm -f test-nginx
         
       - name: Clear images
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker system prune -f  

@@ -48,12 +48,12 @@ jobs:
      #     push: true
      #     tags: ${{ env.projectName }}
      
-      - name: Send publish message
-        uses: appleboy/telegram-action@master
-        with:
-           to: ${{ secrets.TELEGRAM_TO }}
-           token: ${{ secrets.TELEGRAM_TOKEN }}
-           message: The project ${{ env.projectName }} was published to Dockerhub
+     # - name: Send publish message
+     #   uses: appleboy/telegram-action@master
+     #   with:
+     #      to: ${{ secrets.TELEGRAM_TO }}
+     #      token: ${{ secrets.TELEGRAM_TOKEN }}
+     #      message: The project ${{ env.projectName }} was published to Dockerhub
                     
       - name: Install SSH Key
         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
@@ -61,24 +61,21 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-host: ${{ secrets.SSH_HOST }}
           
-     # - name: Stop old container
-     #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=${{ env.projectName }} | xargs docker stop
-     
       - name: Stop old container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker stop 599d14cff5f2
-       
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker rm -f $(docker ps -q --filter ancestor=${{ env.projectName }})
+     
       - name: Pull new image
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker pull ${{ env.projectName }}
       
       - name: Run new container
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker run --rm -d -p 80:80 ${{ env.projectName }}
         
-      - name: Send deploy message
-        uses: appleboy/telegram-action@master
-        with:
-           to: ${{ secrets.TELEGRAM_TO }}
-           token: ${{ secrets.TELEGRAM_TOKEN }}
-           message: The project ${{ env.projectName }} was deployed to host
+     # - name: Send deploy message
+     #   uses: appleboy/telegram-action@master
+     #   with:
+     #      to: ${{ secrets.TELEGRAM_TO }}
+     #      token: ${{ secrets.TELEGRAM_TOKEN }}
+     #      message: The project ${{ env.projectName }} was deployed to host
           
    
           

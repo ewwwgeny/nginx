@@ -61,14 +61,14 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-host: ${{ secrets.SSH_HOST }}
           
-      - name: Remove old container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker ps -q --filter ancestor=ghh5739/test-ngnix | xargs docker stop
+     # - name: Remove old container
+     #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker rm f test-nginx
      
       - name: Pull new image
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker pull ${{ env.projectName }}
       
       - name: Run new container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker run --rm -d -p 80:80 ${{ env.projectName }}
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} docker run --name test-nginx -d -p 80:80 ${{ env.projectName }}
         
      # - name: Send deploy message
      #   uses: appleboy/telegram-action@master
